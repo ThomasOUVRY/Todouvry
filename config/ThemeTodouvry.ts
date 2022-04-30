@@ -36,11 +36,6 @@ export const themeTodouvry = extendTheme({
     },
     fontConfig: {},
     components: {
-        Input: {
-            baseStyle: {
-                _input: {}
-            }
-        },
         Text: {
             baseStyle: {
                 _light: {
@@ -52,14 +47,10 @@ export const themeTodouvry = extendTheme({
 
             }
         },
-        NativeBaseProvider: {
+        Heading: {
             baseStyle: {
-                _light: {
-                    bg: 'todoBlue.100'
-                },
-                _dark: {
-                    bg: 'todoRed.900'
-                }
+                _light: {color: 'todoDark.900'},
+                _dark: {color: 'todoBlue.200'}
             }
         }
     }

@@ -1,15 +1,24 @@
 import React from 'react';
 import {Box, Button, Center, Column, FormControl, Heading, Input, Row} from 'native-base';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from 'react-navigation-stack/lib/typescript/src/vendor/types';
+import {auth} from '../../../config/Firebase';
+
 
 export const Login = () => {
+    const navigation = useNavigation<StackNavigationProp>();
 
-    const [userName, setUsername] = React.useState('');
-    const [password, setPassword] = React.useState('');
+    const [userName, setUsername] = React.useState<string>('');
+    const [password, setPassword] = React.useState<string>('');
 
     const handleChangeUserName = (text: string) => setUsername(text);
     const handleChangePassword = (text: string) => setPassword(text);
 
-    return <Center>
+    const handleLogin = () => {
+        auth.signInWithEmailAndPassword(userName, password).then(() => navigation.navigate('Home'));
+    }
+
+    return <Center h="100%" _dark={{bg: 'todoDark.900'}}>
         <Column w={'80%'} space={'5'}>
 
             <Box alignItems="center">
@@ -31,10 +40,10 @@ export const Login = () => {
 
 
             <Row w="100%" space={'2'} justifyContent="space-between">
-                <Button width="1/2" size="sm" bgColor={'todoRed.900'} onPress={() => console.log(userName)}>
+                <Button width="1/2" size="sm" bgColor={'todoRed.900'} onPress={() => navigation.navigate('SignUp')}>
                     Sign up
                 </Button>
-                <Button width="1/2" size="sm" bgColor={'todoRed.900'}>
+                <Button width="1/2" size="sm" bgColor={'todoRed.900'} onPress={handleLogin}>
                     Log in
                 </Button>
             </Row>

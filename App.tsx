@@ -1,8 +1,11 @@
 import React from 'react';
-import {Center, NativeBaseProvider,} from 'native-base';
+import {Box, HStack, NativeBaseProvider, Switch, Text, useColorMode} from 'native-base';
 import {themeTodouvry} from './config/ThemeTodouvry';
-import {Login} from './components/layouts/login/Login';
-
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {Home} from './components/layouts/Home/Home';
+import {Login} from './components/layouts/Login/Login';
+import {SignUp} from './components/layouts/Login/SignUp';
 
 // extend the theme
 export const theme = themeTodouvry;
@@ -11,29 +14,27 @@ declare module 'native-base' {
     interface ICustomTheme extends MyThemeType {
     }
 }
+const Stack = createNativeStackNavigator();
+
 export default function App() {
+
     return (
         <NativeBaseProvider theme={theme}>
-
-            <Center width={'full'} height={'full'}>
-                <Login/>
-            </Center>
-            {/*<Box height={'full'} _dark={{bg: 'todoDark.900'}}>
-                <CheckIcon size="5" mt="0.5" color="emerald.500"/>
-                <FormControl w="75%" maxW="300px">
-                    <FormControl.Label>Password</FormControl.Label>
-                    <Input variant={'outline'} placeholder="Enter password"/>
-                    <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs"/>}>
-                        Try different from previous passwords.
-                    </FormControl.ErrorMessage>
-                </FormControl> 
-            </Box>*/}
+            <Box flex={1}>
+                <NavigationContainer>
+                    <Stack.Navigator initialRouteName="Login">
+                        <Stack.Screen options={{headerShown: false}} name="Login" component={Login}/>
+                        <Stack.Screen options={{headerShown: false}} name="SignUp" component={SignUp}/>
+                        <Stack.Screen name="Home" component={Home}/>
+                    </Stack.Navigator>
+                </NavigationContainer>
+                <ToggleDarkMode></ToggleDarkMode>
+            </Box>
         </NativeBaseProvider>
     );
 }
 
 // Color Switch Component
-/*
 function ToggleDarkMode() {
     const {colorMode, toggleColorMode} = useColorMode();
     return (
@@ -50,4 +51,3 @@ function ToggleDarkMode() {
         </HStack>
     );
 }
-*/
