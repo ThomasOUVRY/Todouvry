@@ -1,9 +1,10 @@
 import React from 'react';
-import {Box, Button, Center, Column, FormControl, Heading, Input, Row} from 'native-base';
-import {useNavigation} from '@react-navigation/native';
+import {Box, Button, Center, Column, Container, FormControl, Heading, Input, Row,} from 'native-base';
+import i18n from 'i18n-js';
+import {PLACEHOLDER} from '../../../const/placeholder';
 import {StackNavigationProp} from 'react-navigation-stack/lib/typescript/src/vendor/types';
+import {useNavigation} from '@react-navigation/native';
 import {auth} from '../../../config/Firebase';
-
 
 export const Login = () => {
     const navigation = useNavigation<StackNavigationProp>();
@@ -15,38 +16,63 @@ export const Login = () => {
     const handleChangePassword = (text: string) => setPassword(text);
 
     const handleLogin = () => {
-        auth.signInWithEmailAndPassword(userName, password).then(() => navigation.navigate('Home'));
-    }
+        auth.signInWithEmailAndPassword(userName, password).then(() => {
+            setUsername('');
+            setPassword('');
+            navigation.navigate('Home');
+        }).catch((error) => {
+            let errorCode = error.code;
+            let errorMessage = error.message;
+            if (errorCode === 'auth/wrong-password') {
+                alert('Wrong password.');
+            } else {
+                alert(errorMessage);
+            }
+            console.log(error);
+        });
+    };
 
-    return <Center h="100%" _dark={{bg: 'todoDark.900'}}>
-        <Column w={'80%'} space={'5'}>
+    return (
+        <Center w="100%" h="100%" nativeID={'centerContainer'}>
+            <Container maxWidth="2xl" centerContent={true} px={10} w="100%">
+                <Column space={'5'} w={'100%'}>
+                    <Box alignItems="center">
+                        <Heading mb={10}>TODOUVRY</Heading>
+                        <FormControl>
+                            <FormControl.Label>{i18n.t('general.email')}</FormControl.Label>
+                            <Input
+                                onChangeText={handleChangeUserName}
+                                variant="outline"
+                                placeholder={PLACEHOLDER.email}
+                                type={'text'}
+                                value={userName}
+                            />
+                        </FormControl>
 
-            <Box alignItems="center">
-                <Heading>TODOUVRY</Heading>
-                <FormControl>
-                    <FormControl.Label>Username</FormControl.Label>
-                    <Input onChangeText={handleChangeUserName} w="100%" variant="outline" placeholder="username"
-                           type={'text'}
-                           value={userName}/>
-                </FormControl>
+                        <FormControl>
+                            <FormControl.Label>
+                                {i18n.t('general.password')}
+                            </FormControl.Label>
+                            <Input
+                                onChangeText={handleChangePassword}
+                                variant="outline"
+                                placeholder={i18n.t('helpText.password')}
+                                type={'password'}
+                                value={password}
+                            />
+                        </FormControl>
+                    </Box>
 
-                <FormControl>
-                    <FormControl.Label>Password</FormControl.Label>
-                    <Input onChangeText={handleChangePassword} w="100%" variant="outline" placeholder="password"
-                           type={'password'}
-                           value={password}/>
-                </FormControl>
-            </Box>
-
-
-            <Row w="100%" space={'2'} justifyContent="space-between">
-                <Button width="1/2" size="sm" bgColor={'todoRed.900'} onPress={() => navigation.navigate('SignUp')}>
-                    Sign up
-                </Button>
-                <Button width="1/2" size="sm" bgColor={'todoRed.900'} onPress={handleLogin}>
-                    Log in
-                </Button>
-            </Row>
-        </Column>
-    </Center>
-}
+                    <Row space={'2'} justifyContent="space-between">
+                        <Button flexGrow={1} onPress={() => navigation.navigate('SignUp')}>
+                            {i18n.t('signup')}
+                        </Button>
+                        <Button flexGrow={1} onPress={handleLogin}>
+                            {i18n.t('login')}
+                        </Button>
+                    </Row>
+                </Column>
+            </Container>
+        </Center>
+    );
+};
