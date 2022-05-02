@@ -1,38 +1,32 @@
-import React from 'react';
-import {Box, Button, Center, Column, Container, FormControl, Heading, Input, Row,} from 'native-base';
-import i18n from 'i18n-js';
-import {PLACEHOLDER} from '../../../const/placeholder';
-import {StackNavigationProp} from 'react-navigation-stack/lib/typescript/src/vendor/types';
-import {useNavigation} from '@react-navigation/native';
-import {auth} from '../../../config/Firebase';
+import React from 'react'
+import { Box, Button, Center, Column, Container, FormControl, Heading, Input, Row } from 'native-base'
+import i18n from 'i18n-js'
+import { PLACEHOLDER } from '../../../const/placeholder'
+import { StackNavigationProp } from 'react-navigation-stack/lib/typescript/src/vendor/types'
+import { useNavigation } from '@react-navigation/native'
+import { auth } from '../../../config/Firebase'
 
 export const Login = () => {
-    const navigation = useNavigation<StackNavigationProp>();
+  const navigation = useNavigation<StackNavigationProp>()
 
-    const [userName, setUsername] = React.useState<string>('');
-    const [password, setPassword] = React.useState<string>('');
+  const [userName, setUsername] = React.useState<string>('admin@ouvryt.fr')
+  const [password, setPassword] = React.useState<string>('adminadmin')
 
-    const handleChangeUserName = (text: string) => setUsername(text);
-    const handleChangePassword = (text: string) => setPassword(text);
+  const handleChangeUserName = (text: string) => setUsername(text)
+  const handleChangePassword = (text: string) => setPassword(text)
 
-    const handleLogin = () => {
-        auth.signInWithEmailAndPassword(userName, password).then(() => {
-            setUsername('');
-            setPassword('');
-            navigation.navigate('Home');
-        }).catch((error) => {
-            let errorCode = error.code;
-            let errorMessage = error.message;
-            if (errorCode === 'auth/wrong-password') {
-                alert('Wrong password.');
-            } else {
-                alert(errorMessage);
-            }
-            console.log(error);
-        });
-    };
+  const handleLogin = () => {
+    auth.signInWithEmailAndPassword(userName, password).then(() => {
+      setUsername('')
+      setPassword('')
+      navigation.navigate('Home')
+    }).catch((error) => {
+      const errorMessage = error.message
+      window.alert(errorMessage)
+    })
+  }
 
-    return (
+  return (
         <Center w="100%" h="100%" nativeID={'centerContainer'}>
             <Container maxWidth="2xl" centerContent={true} px={10} w="100%">
                 <Column space={'5'} w={'100%'}>
@@ -74,5 +68,5 @@ export const Login = () => {
                 </Column>
             </Container>
         </Center>
-    );
-};
+  )
+}
