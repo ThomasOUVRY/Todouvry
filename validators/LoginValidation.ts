@@ -1,7 +1,7 @@
 import * as Yup from "yup";
 import {t} from "i18next";
 
-const MIN_LENGTH_PASSWORD = 6;
+export const MIN_LENGTH_PASSWORD = 6;
 export const MAX_LENGTH_PASSWORD = 30;
 
 export default Yup.object().shape({

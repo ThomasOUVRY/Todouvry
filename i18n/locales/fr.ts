@@ -10,7 +10,8 @@ export const fr = {
     },
     general: {
         email: 'Adresse mail',
-        password: 'Mot de passe'
+        password: 'Mot de passe',
+        passwordConfirm: 'Confirmer le mot de passe'
     },
     login: 'Se connecter',
     signup: 'Créer un compte',
@@ -22,6 +23,7 @@ export const fr = {
         email: 'Le champ doit correspondre à un email',
         min: 'Le champ doit contenir au minimum {{min}} caractères',
         max: 'Le champ doit contenir au maximum {{max}} caractères',
+        confirmPassword: 'Le champ doit correspondre au mot de passe'
     }
 };
 

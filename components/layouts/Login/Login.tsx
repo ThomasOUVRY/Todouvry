@@ -13,7 +13,7 @@ import LoginValidation, {MAX_LENGTH_PASSWORD} from "../../../validators/LoginVal
 export const Login = () => {
     const navigation = useNavigation<StackNavigationProp>()
 
-    const initialValues = new LoginInfoDTO();
+    const initialValues = new LoginInfoDTO('admin@ouvryt.fr', 'adminadmin');
 
     const onSubmit = (values: LoginInfoDTO) => {
         auth.signInWithEmailAndPassword(values.email!, values.password!).then(() => {

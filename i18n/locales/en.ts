@@ -10,7 +10,8 @@ export const en = {
     },
     general: {
         email: 'Email address',
-        password: 'Password'
+        password: 'Password',
+        passwordConfirm: 'Confirm password'
     },
     login: 'Log in',
     signup: 'Sign up',
@@ -22,5 +23,6 @@ export const en = {
         email: 'This field must be a valid email address',
         min: 'This field must be at least {{min}} characters',
         max: 'This field must be at most {{max}} characters',
+        confirmPassword: 'This field must be equal to the password field'
     }
 };

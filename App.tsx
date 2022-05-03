@@ -29,11 +29,11 @@ export default function App() {
                         options={{
                             title: t('signup'),
                             headerStyle: {
-                                backgroundColor: '#0A0A0A'
+                                backgroundColor: themeTodouvry.colors.todoDark["800"],
                             },
-                            headerTintColor: '#FFF8F8',
+                            headerTintColor: themeTodouvry.colors.todoWhite["900"],
                             headerTitleStyle: {
-                                color: '#FFF8F8',
+                                color: themeTodouvry.colors.todoWhite["900"],
                                 fontWeight: 'bold'
                             }
 

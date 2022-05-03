@@ -15,5 +15,6 @@ export async function initTranslations() {
                 translation: fr
             }
         },
+
     });
 }
