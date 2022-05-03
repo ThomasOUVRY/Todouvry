@@ -3,11 +3,11 @@ import {Box, Button, Center, Column, Container, FormControl, Heading, Input, Row
 import {PLACEHOLDER} from '../../../const/placeholder'
 import {StackNavigationProp} from 'react-navigation-stack/lib/typescript/src/vendor/types'
 import {useNavigation} from '@react-navigation/native'
-import {Formik} from "formik";
-import {LoginInfoDTO} from "../../../dto/LoginInfo";
-import {auth} from "../../../config/Firebase";
-import {t} from "i18next";
-import LoginValidation, {MAX_LENGTH_PASSWORD} from "../../../validators/LoginValidation";
+import {Formik} from 'formik';
+import {LoginInfoDTO} from '../../../dto/LoginInfo';
+import {auth} from '../../../config/Firebase';
+import {t} from 'i18next';
+import LoginValidation, {MAX_LENGTH_PASSWORD} from '../../../validators/LoginValidation';
 
 
 export const Login = () => {

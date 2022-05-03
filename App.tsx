@@ -7,7 +7,7 @@ import {SignUp} from './components/layouts/Login/SignUp'
 import {NavigationContainer} from '@react-navigation/native'
 import {Home} from './components/layouts/Home/Home'
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
-import {t} from "i18next";
+import {t} from 'i18next';
 
 const Stack = createNativeStackNavigator()
 

@@ -1,7 +1,7 @@
 import {fr} from './locales/fr';
 import i18next from 'i18next';
 import * as Localization from 'expo-localization';
-import {en} from "./locales/en";
+import {en} from './locales/en';
 
 export async function initTranslations() {
     void await i18next.init({

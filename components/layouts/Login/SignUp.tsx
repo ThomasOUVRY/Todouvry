@@ -5,9 +5,9 @@ import {useNavigation} from '@react-navigation/native';
 import {NavigationProps} from '../../../config/Routing';
 import {t} from 'i18next';
 import {PLACEHOLDER} from '../../../const/placeholder';
-import {Formik} from "formik";
-import {SingUpInfoDTO} from "../../../dto/SignUpInfo";
-import SignUpValidation from "../../../validators/SignUpValidation";
+import {Formik} from 'formik';
+import {SingUpInfoDTO} from '../../../dto/SignUpInfo';
+import SignUpValidation from '../../../validators/SignUpValidation';
 
 export const SignUp = () => {
     const navigation = useNavigation<NavigationProps>();
