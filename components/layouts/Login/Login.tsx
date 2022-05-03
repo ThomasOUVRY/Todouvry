@@ -7,18 +7,13 @@ import {Formik} from "formik";
 import {LoginInfoDTO} from "../../../dto/LoginInfo";
 import {auth} from "../../../config/Firebase";
 import {t} from "i18next";
-import * as Yup from "yup";
+import LoginValidation, {MAX_LENGTH_PASSWORD} from "../../../validators/LoginValidation";
 
 
 export const Login = () => {
     const navigation = useNavigation<StackNavigationProp>()
 
     const initialValues = new LoginInfoDTO();
-
-    const validationSchema = Yup.object().shape({
-        email: Yup.string().email('error.email').required('error.required'),
-        password: Yup.string().required('error.required').min(6, 'error.min').max(30, 'error.max')
-    });
 
     const onSubmit = (values: LoginInfoDTO) => {
         auth.signInWithEmailAndPassword(values.email!, values.password!).then(() => {
@@ -32,7 +27,7 @@ export const Login = () => {
     return (
         <Center w="100%" h="100%" nativeID={'centerContainer'}>
             <Container maxWidth="2xl" centerContent={true} px={10} w="100%">
-                <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
+                <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={LoginValidation}>
                     {({values, handleChange, errors, setFieldTouched, touched, handleSubmit}) => (
                         <Column space={'5'} w={'100%'}>
                             <Box alignItems="center">
@@ -47,7 +42,7 @@ export const Login = () => {
                                         type={'text'}
                                         value={values.email}
                                     />
-                                    <FormControl.ErrorMessage>{t(errors.email!)}</FormControl.ErrorMessage>
+                                    <FormControl.ErrorMessage>{errors.email}</FormControl.ErrorMessage>
                                 </FormControl>
 
                                 <FormControl isInvalid={touched.password && errors.password !== undefined}>
@@ -61,12 +56,9 @@ export const Login = () => {
                                         placeholder={t('helpText.password')}
                                         type={'password'}
                                         value={values.password}
-                                        maxLength={30}
+                                        maxLength={MAX_LENGTH_PASSWORD}
                                     />
-                                    <FormControl.ErrorMessage>{t(errors.password!, {
-                                        min: 6,
-                                        max: 30
-                                    })}</FormControl.ErrorMessage>
+                                    <FormControl.ErrorMessage>{errors.password}</FormControl.ErrorMessage>
                                 </FormControl>
                             </Box>
 

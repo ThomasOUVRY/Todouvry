@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import {HStack, NativeBaseProvider, Switch, Text, useColorMode} from 'native-base'
 import {initTranslations} from './i18n/i18n'
 import {themeTodouvry} from './config/ThemeTodouvry'
@@ -13,10 +13,8 @@ const Stack = createNativeStackNavigator()
 
 
 export default function App() {
+    void initTranslations();
 
-    useEffect(() => {
-        void initTranslations();
-    }, []);
 
     return (
         <NativeBaseProvider theme={themeTodouvry}>
