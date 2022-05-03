@@ -1,72 +1,86 @@
 import React from 'react'
-import { Box, Button, Center, Column, Container, FormControl, Heading, Input, Row } from 'native-base'
-import i18n from 'i18n-js'
-import { PLACEHOLDER } from '../../../const/placeholder'
-import { StackNavigationProp } from 'react-navigation-stack/lib/typescript/src/vendor/types'
-import { useNavigation } from '@react-navigation/native'
-import { auth } from '../../../config/Firebase'
+import {Box, Button, Center, Column, Container, FormControl, Heading, Input, Row} from 'native-base'
+import {PLACEHOLDER} from '../../../const/placeholder'
+import {StackNavigationProp} from 'react-navigation-stack/lib/typescript/src/vendor/types'
+import {useNavigation} from '@react-navigation/native'
+import {Formik} from "formik";
+import {LoginInfoDTO} from "../../../dto/LoginInfo";
+import {auth} from "../../../config/Firebase";
+import {t} from "i18next";
+import * as Yup from "yup";
+
 
 export const Login = () => {
-  const navigation = useNavigation<StackNavigationProp>()
+    const navigation = useNavigation<StackNavigationProp>()
 
-  const [userName, setUsername] = React.useState<string>('admin@ouvryt.fr')
-  const [password, setPassword] = React.useState<string>('adminadmin')
+    const initialValues = new LoginInfoDTO();
 
-  const handleChangeUserName = (text: string) => setUsername(text)
-  const handleChangePassword = (text: string) => setPassword(text)
+    const validationSchema = Yup.object().shape({
+        email: Yup.string().email('error.email').required('error.required'),
+        password: Yup.string().required('error.required').min(6, 'error.min').max(30, 'error.max')
+    });
 
-  const handleLogin = () => {
-    auth.signInWithEmailAndPassword(userName, password).then(() => {
-      setUsername('')
-      setPassword('')
-      navigation.navigate('Home')
-    }).catch((error) => {
-      const errorMessage = error.message
-      window.alert(errorMessage)
-    })
-  }
+    const onSubmit = (values: LoginInfoDTO) => {
+        auth.signInWithEmailAndPassword(values.email!, values.password!).then(() => {
+            navigation.navigate('Home')
+        }).catch((error) => {
+            const errorMessage = error.message
+            window.alert(errorMessage)
+        })
+    };
 
-  return (
+    return (
         <Center w="100%" h="100%" nativeID={'centerContainer'}>
             <Container maxWidth="2xl" centerContent={true} px={10} w="100%">
-                <Column space={'5'} w={'100%'}>
-                    <Box alignItems="center">
-                        <Heading mb={10}>TODOUVRY</Heading>
-                        <FormControl>
-                            <FormControl.Label>{i18n.t('general.email')}</FormControl.Label>
-                            <Input
-                                onChangeText={handleChangeUserName}
-                                variant="outline"
-                                placeholder={PLACEHOLDER.email}
-                                type={'text'}
-                                value={userName}
-                            />
-                        </FormControl>
+                <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
+                    {({values, handleChange, errors, setFieldTouched, touched, handleSubmit}) => (
+                        <Column space={'5'} w={'100%'}>
+                            <Box alignItems="center">
+                                <Heading mb={10}>TODOUVRY</Heading>
+                                <FormControl isInvalid={touched.email && errors.email !== undefined}>
+                                    <FormControl.Label>{t('general.email')}</FormControl.Label>
+                                    <Input
+                                        onChangeText={handleChange('email')}
+                                        onBlur={() => setFieldTouched('email')}
+                                        variant="outline"
+                                        placeholder={PLACEHOLDER.email}
+                                        type={'text'}
+                                        value={values.email}
+                                    />
+                                    <FormControl.ErrorMessage>{t(errors.email!)}</FormControl.ErrorMessage>
+                                </FormControl>
 
-                        <FormControl>
-                            <FormControl.Label>
-                                {i18n.t('general.password')}
-                            </FormControl.Label>
-                            <Input
-                                onChangeText={handleChangePassword}
-                                variant="outline"
-                                placeholder={i18n.t('helpText.password')}
-                                type={'password'}
-                                value={password}
-                            />
-                        </FormControl>
-                    </Box>
+                                <FormControl isInvalid={touched.password && errors.password !== undefined}>
+                                    <FormControl.Label>
+                                        {t('general.password')}
+                                    </FormControl.Label>
+                                    <Input
+                                        onChangeText={handleChange('password')}
+                                        onBlur={() => setFieldTouched('password')}
+                                        variant="outline"
+                                        placeholder={t('helpText.password')}
+                                        type={'password'}
+                                        value={values.password}
+                                        maxLength={30}
+                                    />
+                                    <FormControl.ErrorMessage>{t(errors.password!, {
+                                        min: 6,
+                                        max: 30
+                                    })}</FormControl.ErrorMessage>
+                                </FormControl>
+                            </Box>
 
-                    <Row space={'2'} justifyContent="space-between">
-                        <Button flexGrow={1} onPress={() => navigation.navigate('SignUp')}>
-                            {i18n.t('signup')}
-                        </Button>
-                        <Button flexGrow={1} onPress={handleLogin}>
-                            {i18n.t('login')}
-                        </Button>
-                    </Row>
-                </Column>
+                            <Row space={'2'} justifyContent="space-between">
+                                <Button flexGrow={1} onPress={() => navigation.navigate('SignUp')}>
+                                    {t('signup')}
+                                </Button>
+                                <Button flexGrow={1} onPress={() => handleSubmit()}>
+                                    {t('login')}
+                                </Button>
+                            </Row>
+                        </Column>)}
+                </Formik>
             </Container>
         </Center>
-  )
+    )
 }

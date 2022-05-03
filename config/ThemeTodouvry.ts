@@ -1,4 +1,4 @@
-import { extendTheme } from 'native-base'
+import {extendTheme} from 'native-base'
 
 export const themeTodouvry = extendTheme({
   colors: {
@@ -69,7 +69,17 @@ export const themeTodouvry = extendTheme({
     Heading: {
       baseStyle: {
         _light: { color: 'todoDark.800' },
-        _dark: { color: 'todoWhite.900' }
+        _dark: { color: 'todoWhite.900' },
+
+      }
+    },
+    FormControlErrorMessage:{
+      baseStyle: {
+        _light: {
+          _text: {
+            color: 'todoRed.500'
+          }
+        }
       }
     },
     Button: {

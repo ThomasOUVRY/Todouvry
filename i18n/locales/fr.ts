@@ -16,6 +16,12 @@ export const fr = {
     signup: 'Créer un compte',
     helpText: {
         password: 'Doit contenir entre 6-30 caractères'
+    },
+    error: {
+        required: 'Le champ est requis',
+        email: 'Le champ doit correspondre à un email',
+        min: 'Le champ doit contenir au minimum {{min}} caractères',
+        max: 'Le champ doit contenir au maximum {{max}} caractères',
     }
 };
 

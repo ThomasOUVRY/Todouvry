@@ -3,7 +3,7 @@ import {Box, Button, Center, Column, Container, FormControl, Heading, Input, Row
 import {auth} from '../../../config/Firebase';
 import {useNavigation} from '@react-navigation/native';
 import {NavigationProps} from '../../../config/Routing';
-import i18n from 'i18n-js';
+import {t} from 'i18next';
 import {PLACEHOLDER} from '../../../const/placeholder';
 
 export const SignUp = () => {
@@ -31,9 +31,9 @@ export const SignUp = () => {
             <Container maxWidth="2xl" centerContent={true} px={10} w="100%">
                 <Column w={'80%'} space={'5'}>
                     <Box alignItems="center">
-                        <Heading>{i18n.t('signup')}</Heading>
+                        <Heading mb={10}>{t('signup')}</Heading>
                         <FormControl>
-                            <FormControl.Label>{i18n.t('user.name')}</FormControl.Label>
+                            <FormControl.Label>{t('user.name')}</FormControl.Label>
                             <Input
                                 onChangeText={setName}
                                 w="100%"
@@ -44,7 +44,7 @@ export const SignUp = () => {
                             />
                         </FormControl>
                         <FormControl>
-                            <FormControl.Label>{i18n.t('general.email')}</FormControl.Label>
+                            <FormControl.Label>{t('general.email')}</FormControl.Label>
                             <Input
                                 onChangeText={handleChangeUserName}
                                 w="100%"
@@ -57,13 +57,13 @@ export const SignUp = () => {
 
                         <FormControl>
                             <FormControl.Label>
-                                {i18n.t('general.password')}
+                                {t('general.password')}
                             </FormControl.Label>
                             <Input
                                 onChangeText={handleChangePassword}
                                 w="100%"
                                 variant="outline"
-                                placeholder={i18n.t('helpText.password')}
+                                placeholder={t('helpText.password')}
                                 type={'password'}
                                 value={password}
                             />

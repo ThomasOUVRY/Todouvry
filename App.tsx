@@ -1,38 +1,43 @@
-import React from 'react'
-import { HStack, NativeBaseProvider, Switch, Text, useColorMode } from 'native-base'
-import { initTranslations } from './i18n/i18n'
-import { themeTodouvry } from './config/ThemeTodouvry'
-import { Login } from './components/layouts/Login/Login'
-import { SignUp } from './components/layouts/Login/SignUp'
-import { NavigationContainer } from '@react-navigation/native'
-import { Home } from './components/layouts/Home/Home'
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import i18n from 'i18n-js'
+import React, {useEffect} from 'react'
+import {HStack, NativeBaseProvider, Switch, Text, useColorMode} from 'native-base'
+import {initTranslations} from './i18n/i18n'
+import {themeTodouvry} from './config/ThemeTodouvry'
+import {Login} from './components/layouts/Login/Login'
+import {SignUp} from './components/layouts/Login/SignUp'
+import {NavigationContainer} from '@react-navigation/native'
+import {Home} from './components/layouts/Home/Home'
+import {createNativeStackNavigator} from '@react-navigation/native-stack'
+import {t} from "i18next";
 
 const Stack = createNativeStackNavigator()
-initTranslations()
 
-export default function App () {
-  return (
+
+export default function App() {
+
+    useEffect(() => {
+        void initTranslations();
+    }, []);
+
+    return (
         <NativeBaseProvider theme={themeTodouvry}>
             <NavigationContainer>
                 <Stack.Navigator initialRouteName="Login">
                     <Stack.Screen
-                        options={{ headerShown: false }}
+                        options={{headerShown: false}}
                         name="Login"
                         component={Login}
                     />
                     <Stack.Screen
                         options={{
-                          title: i18n.t('signup'),
-                          headerStyle: {
-                            backgroundColor: '#0A0A0A'
-                          },
-                          headerTintColor: '#FFF8F8',
-                          headerTitleStyle: {
-                            color: '#FFF8F8',
-                            fontWeight: 'bold'
-                          }
+                            title: t('signup'),
+                            headerStyle: {
+                                backgroundColor: '#0A0A0A'
+                            },
+                            headerTintColor: '#FFF8F8',
+                            headerTitleStyle: {
+                                color: '#FFF8F8',
+                                fontWeight: 'bold'
+                            }
 
                         }}
                         name="SignUp"
@@ -43,13 +48,13 @@ export default function App () {
             </NavigationContainer>
             <ToggleDarkMode></ToggleDarkMode>
         </NativeBaseProvider>
-  )
+    )
 }
 
 // Color Switch Component
-function ToggleDarkMode () {
-  const { colorMode, toggleColorMode } = useColorMode()
-  return (
+function ToggleDarkMode() {
+    const {colorMode, toggleColorMode} = useColorMode()
+    return (
         <HStack space={2} alignItems="center">
             <Text>Dark</Text>
             <Switch
@@ -61,5 +66,5 @@ function ToggleDarkMode () {
             />
             <Text>Light</Text>
         </HStack>
-  )
+    )
 }
