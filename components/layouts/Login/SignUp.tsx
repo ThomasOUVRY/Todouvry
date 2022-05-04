@@ -27,7 +27,7 @@ export const SignUp = () => {
 
     return (
         <Center w="100%" h="100%">
-            <Container maxWidth="2xl" centerContent={true} px={10} w="100%">
+            <Container  >
                 <Formik initialValues={initialValues} onSubmit={handleAccountCreation}
                         validationSchema={SignUpValidation}>
                     {({values, handleChange, errors, setFieldTouched, touched, handleSubmit}) => (
